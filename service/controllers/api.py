@@ -1,5 +1,4 @@
 from flask import Blueprint, abort, render_template
-from .. import x
 
 blueprint = Blueprint('api', __name__, url_prefix='/api')
 
