@@ -1,0 +1,13 @@
+cffi==1.5.0
+Flask==0.10.1
+Flask-Assets==0.11
+Flask-Misaka==0.4.0
+Flask-Script==2.0.5
+itsdangerous==0.24
+Jinja2==2.8
+MarkupSafe==0.23
+misaka==2.0.0
+pycparser==2.14
+webassets==0.11.1
+Werkzeug==0.11.3
+wheel==0.26.0

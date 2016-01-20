@@ -1,0 +1,10 @@
+.env/
+__pycache__/
+
+*.py[cod]
+
+pip-log.txt
+pip-delete-this-directory.txt
+
+.sass_cache
+*.css.map
