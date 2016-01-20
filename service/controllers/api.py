@@ -39,5 +39,3 @@ def verify_request(payload, ip):
     return False
 
 # TODO: Implement 418 (I'm a teapot)
-
-    #return render_template('content.jinja', content=item.data, title=item.title, description=item.description)
