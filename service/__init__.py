@@ -1,27 +1,14 @@
 from flask import Flask, render_template
 from flask.ext.misaka import Misaka, markdown
 from flask.ext.assets import Environment, Bundle
+from .reader import Reader
 
 
 md = Misaka()
 assets = Environment()
-x = {
-    "name": "Tom"
-}
-
-def convert():
-    import os
-    source = 'content'
-    target = 'service/design/templates/content'
-    
-    for dirpath, dirs, files in os.walk(source):
-        for filename in files:
-            with open(os.path.join(dirpath, filename)) as text:
-                content = markdown(text.read())
-                filename = os.path.splitext(filename)[0] + '.jinja'
-            with open(os.path.join(target, filename), 'w') as text:
-                text.write(content)
-
+reader = Reader('content', 'service/design/templates/cache')
+reader.clean()
+reader.build()
 
 
 def create_app():
@@ -64,22 +51,3 @@ def register_errorhandlers(app):
 def register_extensions(app):
     md.init_app(app)
     assets.init_app(app)
-
-"""
-def register_template_functions(app):
-    from . import template
-
-    # TODO: Implement this in a sane manner
-    for name in dir(template.TemplateGlobals):
-        if not name.startswith("__"):
-            app.context_processor(getattr(template.TemplateGlobals, name))
-
-    for name in dir(template.TemplateFunctions):
-        if not name.startswith("__"):
-            app.add_template_global(getattr(template.TemplateFunctions, name))
-
-    for name in dir(template.TemplateFilters):
-        if not name.startswith("__"):
-            app.add_template_filter(getattr(template.TemplateFilters, name))
-
-"""

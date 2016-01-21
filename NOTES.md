@@ -21,6 +21,9 @@ http://steveasleep.com
 ### Content
 Git hook -> Git Pull -> Parse Markdown -> Output file.jinja
 
+### Images
+Strictly PNG, use ZopfliPNG for compression
+
 
 ## URL Schema
 /page-name
