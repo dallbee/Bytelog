@@ -19,7 +19,7 @@ def rebuild():
     return "HAHA"
 
 
-
+"""
 def verify_request(payload, ip):
 
     # Check for secure token
@@ -36,5 +36,5 @@ def verify_request(payload, ip):
 
     abort(403)
     return False
-
+"""
 # TODO: Implement 418 (I'm a teapot)

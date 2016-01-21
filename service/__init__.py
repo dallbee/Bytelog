@@ -57,7 +57,7 @@ def register_errorhandlers(app):
         error_code = getattr(error, 'code', 500)
         return render_template('errors/{}.jinja'.format(error_code)), error_code
 
-    for errcode in [403, 404, 500]:
+    for errcode in [403, 404, 500, 501]:
         app.errorhandler(errcode)(render_error)
 
 
