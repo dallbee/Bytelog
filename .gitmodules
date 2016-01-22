@@ -1,4 +1,4 @@
 [submodule "content"]
 	path = content
-    url = ../content.git
+    url = ../content
     fetchRecurseSubmodules = on-demand
