@@ -1,3 +1,4 @@
 [submodule "content"]
 	path = content
-	url = git@github.com:dallbee/content.git
+    url = ../content.git
+    fetchRecurseSubmodules = on-demand
