@@ -2,42 +2,39 @@
 <html class='no-js' lang='en-us'>
     <head>
         <title>{{ meta.title }}</title>
-        <meta http-equiv='x-ua-compatible' content='ie=edge'>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
-
-        <!--<link rel='apple-touch-icon' href='#'>-->
-        <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
-        <link href='https://fonts.googleapis.com/css?family=Crimson+Text:400,600' rel='stylesheet' type='text/css'>
+        <link rel='author' href='http://domain/humans.txt'>
+        <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Cantarell:400,400italic,700italic,700'>
         {% assets 'styles' %}
         <link rel='stylesheet' href='{{ ASSET_URL }}'>
         {% endassets %}
     </head>
     <body>
+    
+        <header>
+            <h1><a href='/'>Bytelog</a></h1>
+            <nav>
+                <ul>
+                    <li><a href='/'>Read</a></li>
+                    <li><a href='/projects'>Projects</a></li>
+                    <li><a href='/author'>Author</a></li>
+                    <li><a href='/about'>About</a></li>
+                </ul>
+                <input type='search' placeholder='Search by Title or Keyword'>
+            </nav>
+        </header>
+
         <main>
             {% block primary %}{% endblock %}
         </main>
 
-        <aside>
-            <hgroup>
-                <h1>Bytelog</h1>
-            </hgroup>
-            <nav>
-                <ul>
-                    <li>
-                        <a href='{{ url_for('content.default', page='writings') }}'>Writings</a>
-                    </li>
-                    <li>
-                        <a href='{{ url_for('content.default', page='projects') }}'>Projects</a>
-                    </li>
-                    <li>
-                        <a href='{{ url_for('content.default', page='author') }}'>Author</a>
-                    </li>
-                    <li>
-                        <a href='{{ url_for('content.default', page='author') }}'>About</a>
-                    </li>
-                </ul>
-            </nav>
-        </aside>
+        <footer>
+            <a href='/humans.txt'>Humans</a> &middot;
+            <a href='/privacy'>Privacy</a> &middot;
+            <a href='/feed'>Feed</a> &middot;
+            <a href='/sitemap'>Sitemap</a> &middot;
+            <a href='#'>Source</a>
+        </footer>
 
         {% assets 'scripts' %}
         <script src='{{ ASSET_URL }}'></script>
