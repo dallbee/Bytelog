@@ -1,4 +1,4 @@
-Copyright (c) 2016, Dylan Allbee
+Copyright (c) 2016, Bytelog.org
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
