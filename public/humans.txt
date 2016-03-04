@@ -1,38 +1,25 @@
 /* TEAM */
 
-    Author: Dylan Allbee
-    Contact: dylan [at] allbee.org
-    From: Twin Peaks, California
-    Degree: B.S. Computer Engineering, B.S. Applied Physics
-
-
-/* THANKS */
-
-    Consultant: Mike Korcha
-    Site: mikekorcha.com
-    From: San Bernardino, California
-    Degree: M.S. Computer Science
-
-    Consultant: Corey Matyas
+    Author: Corey Matyas
     Twitter: @coreymatyas
     Site: coreymatyas.com
     From: Atlanta, Georgia
 
-    Consultant: Vijay Atwater-Van Ness
+    Author: Dylan Allbee
+    Contact: dylan@allbee.org
+    Site: allbee.org
+    From: Twin Peaks, California
+    Degree: B.S. Computer Engineering, B.S. Applied Physics
+
+    Author: Vijay Atwater-Van Ness
     Twitter: @LethalBit
     Site: lethalbit.net
     From: 黄泉
     Degree: B.S. Computer Science
 
-    Loving Partner: Sarah Okafuji
-    From: Crestline, California
-    Degree: M.A. Psychology
-
 
 /* SITE */
 
-    Address: www.allbee.org
-    Language: English
+    Address: www.bytelog.org
     Components: Python, Flask
-    Server: FreeBSD, Nginx, Redis
-    Tools: Sublime Text
+    Server: FreeBSD, Nginx
