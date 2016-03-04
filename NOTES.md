@@ -1,7 +1,22 @@
+## Name
+Rename allbee.org -> bytestream.org
+Redirect allbee.org -> bytestream.org/about (CANONICAL)
+
 ## Links
 http://kecebongsoft.com
 http://splendidabacus.com/martin-pelican/my-super-post.html
 http://steveasleep.com
+https://zerokspot.com/weblog/2015/12/31/new-string-formatting-in-python/ (fonts?)
+https://seanmckaybeck.com/scrapy-the-basics.html
+https://blog.ycombinator.com/basic-income
+http://purecss.io/layouts/blog/
+http://yes-www.org (outer border)
+https://www.michaelfogleman.com
+http://www.2uo.de/ (Cool red colors)
+
+ON BLOAT:
+http://idlewords.com/talks/website_obesity.htm#crisis
+Code to text ratio
 
 ## Articles
 - Regular Expressions
@@ -35,7 +50,7 @@ Strictly PNG, use ZopfliPNG for compression
 
 ``` INDEX
 Dylan Allbee
-Writings / Projects / About
+Home / Writings / Projects / About
 
 Thoughts, articles, and tutorials that I have written
 with the intent of public exposure. I encourage you to read with an open
