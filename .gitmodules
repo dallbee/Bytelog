@@ -1,4 +1,0 @@
-[submodule "content"]
-	path = content
-    url = ../content
-    fetchRecurseSubmodules = on-demand
