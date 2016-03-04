@@ -1,0 +1,46 @@
+<!doctype html>
+<html class='no-js' lang='en-us'>
+    <head>
+        <title>{{ meta.title }}</title>
+        <meta http-equiv='x-ua-compatible' content='ie=edge'>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+        <!--<link rel='apple-touch-icon' href='#'>-->
+        <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Crimson+Text:400,600' rel='stylesheet' type='text/css'>
+        {% assets 'styles' %}
+        <link rel='stylesheet' href='{{ ASSET_URL }}'>
+        {% endassets %}
+    </head>
+    <body>
+        <main>
+            {% block primary %}{% endblock %}
+        </main>
+
+        <aside>
+            <hgroup>
+                <h1>Bytelog</h1>
+            </hgroup>
+            <nav>
+                <ul>
+                    <li>
+                        <a href='{{ url_for('content.default', page='writings') }}'>Writings</a>
+                    </li>
+                    <li>
+                        <a href='{{ url_for('content.default', page='projects') }}'>Projects</a>
+                    </li>
+                    <li>
+                        <a href='{{ url_for('content.default', page='author') }}'>Author</a>
+                    </li>
+                    <li>
+                        <a href='{{ url_for('content.default', page='author') }}'>About</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        {% assets 'scripts' %}
+        <script src='{{ ASSET_URL }}'></script>
+        {% endassets %}
+    </body>
+</html>

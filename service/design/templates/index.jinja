@@ -1,0 +1,13 @@
+{% extends 'layout.jinja' %}
+{% block primary %}
+{% block content %}{% endblock %}
+<ul>
+{{ data }}
+{#{% for key, item in (data|sort(attribute='date')).items() if item.category == 'Writings' %}
+    <li>
+        <h2><a href='{{ item.slug }}'>{{ item.title }}</a></h2>
+        <time datetime='{{ item.date }}'>{{ humanize.naturaldate(item.date)|capitalize }}</time>
+    </li>
+{% endfor %}#}
+</ul>
+{% endblock %}

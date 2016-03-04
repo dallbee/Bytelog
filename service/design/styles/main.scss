@@ -1,0 +1,88 @@
+@import 'bourbon/bourbon';
+@import 'variables';
+@import 'normalize';
+
+// REM -> Fonts
+// EM -> Position
+// % -> Relative Position
+
+// Basic Typesetting
+h1, h2, h3, h4, h5 {
+  font-family: $heading;
+}
+
+code {
+  font-family: $code;
+}
+
+// Main Layout
+html {
+  font-size: 10px;
+  font-family: $normal;
+  overflow-y: scroll;
+}
+
+body {
+  margin: 0;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: $m;
+}
+
+aside {
+  position: fixed;
+  display: none;
+  bottom: 0;
+  top: 0;
+  color: $text-light;
+  background: $shape-dark;
+  text-align: right;
+  width: $side-width;
+
+  > * {
+    margin-right: 2rem;
+  }
+
+  h1 {
+    font-size: $xxl;
+    margin-left: auto;
+    margin-top: 6em;
+    width: 5em;
+  }
+
+  a {
+    color: $text-light;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: $text-em;
+  }
+
+  li {
+    list-style-type: none;
+  }
+
+  p {
+    color: $text-em;
+    font-size: modular-scale(1);
+    font-style: italic;
+  }
+}
+
+main {
+  display: block;
+  padding: 2em;
+  max-width: $main-width;
+}
+
+@media (min-width: $side-width * 2) {
+  aside {
+    display: block;
+  }
+
+  main {
+    margin-left: $side-width;
+  }
+}
