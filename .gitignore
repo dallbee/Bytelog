@@ -6,5 +6,7 @@ __pycache__/
 pip-log.txt
 pip-delete-this-directory.txt
 
-.sass_cache
+.sass-cache
+.webassets-cache
+.webassets-manifest
 *.css.map
