@@ -1,4 +1,7 @@
-from flask import Blueprint, abort, render_template
+from .. import reader
+from flask import Blueprint
+from flask import abort
+from flask import render_template
 
 blueprint = Blueprint('api', __name__, url_prefix='/api')
 
@@ -10,13 +13,14 @@ def notify():
     # Return forbidden if not verified
 
     # Return 204 if successful
-    pass
+    return '', 204
 
 
 @blueprint.route('/rebuild')
 def rebuild():
-    print('wtf')
-    return "HAHA"
+    reader.clean()
+    reader.build_all()
+    return '', 204
 
 
 """
@@ -38,3 +42,4 @@ def verify_request(payload, ip):
     return False
 """
 # TODO: Implement 418 (I'm a teapot)
+# 
