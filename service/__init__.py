@@ -1,12 +1,12 @@
 from . import assets
-from .reader import Reader
+#from .reader import Reader
 from flask import Flask
 from flask import render_template
 from flask.ext.misaka import Misaka
 
 
 md = Misaka()
-reader = Reader('content', 'service/design/templates/cache')
+#reader = Reader('content', 'service/design/templates/cache')
 
 
 def create_app():
@@ -14,7 +14,7 @@ def create_app():
         __name__.split('.')[0],
         static_url_path='/static',
         static_folder='../public',
-        template_folder='design/templates'
+        template_folder='../assets/templates'
     )
 
     register_controllers(app)
@@ -29,8 +29,8 @@ def create_app():
     app.jinja_env.trim_blocks = True
     app.debug = True
 
-    reader.clean()
-    reader.build_all()
+    #reader.clean()
+    #reader.build_all()
 
     return app
 

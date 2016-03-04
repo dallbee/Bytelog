@@ -1,4 +1,4 @@
-import os
+"""import os
 import re
 
 import dateutil.parser
@@ -104,3 +104,4 @@ class Reader():
                 os.remove(os.path.join(self.target, name))
 
         self.content = {}
+"""

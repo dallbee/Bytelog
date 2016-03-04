@@ -1,10 +1,5 @@
-from coffeescript import compile
 from flask_assets import Bundle
 from flask_assets import Environment
-
-
-def coffeescript(_in, out, **kw):
-    out.write(compile(_in.read()))
 
 
 def init_app(app):
@@ -18,8 +13,8 @@ def init_app(app):
     )
 
     scripts = Bundle(
-        '*.coffee',
-        filters=(coffeescript, 'slimit'),
+        '*.js',
+        filters=('slimit'),
         output='main.js'
     )
 
