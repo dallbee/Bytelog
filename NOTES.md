@@ -5,20 +5,17 @@ Bytelog.org
 Corey Matyas, Dylan Allbee, Vijay Atwater-Van Ness
 
 ## Links
-[http://kecebongsoft.com](http://kecebongsoft.com)  
-[http://splendidabacus.com/martin-pelican/my-super-post.html](http://splendidabacus.com/martin-pelican/my-super-post.html)  
-[http://steveasleep.com](http://steveasleep.com)  
-[https://zerokspot.com/weblog/2015/12/31/new-string-formatting-in-python/](https://zerokspot.com/  weblog/2015/12/31/new-string-formatting-in-python/) - fonts?  
-[https://seanmckaybeck.com/scrapy-the-basics.html](https://seanmckaybeck.com/scrapy-the-basics.html)  
-[https://blog.ycombinator.com/basic-income](https://blog.ycombinator.com/basic-income)  
-[http://purecss.io/layouts/blog/](http://purecss.io/layouts/blog)  
-[http://yes-www.org](http://yes-www.org) - outer border  
-[https://www.michaelfogleman.com](https://www.michaelfogleman.com)  
-[http://www.2uo.de/](http://www.2uo.de/] - Cool red colors  
-
-ON BLOAT:
-http://idlewords.com/talks/website_obesity.htm#crisis
-Code to text ratio
+http://kecebongsoft.com  
+http://splendidabacus.com/martin-pelican/my-super-post.html  
+http://steveasleep.com  
+https://zerokspot.com/weblog/2015/12/31/new-string-formatting-in-python/ - fonts?  
+https://seanmckaybeck.com/scrapy-the-basics.html  
+https://blog.ycombinator.com/basic-income  
+http://purecss.io/layouts/blog/  
+http://yes-www.org - outer border  
+https://www.michaelfogleman.com  
+http://www.2uo.de/ - Cool red colors  
+http://idlewords.com/talks/website_obesity.htm#crisis - Code to text ratio
 
 ## Article Ideas
 - Regular Expressions
