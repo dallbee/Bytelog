@@ -2,23 +2,40 @@ from .. import reader
 from flask import Blueprint
 from flask import abort
 from flask import render_template
-import subprocess
+from subprocess import Popen, PIPE
 
 blueprint = Blueprint('api', __name__, url_prefix='/api')
 
-# 'git', 'diff-tree', '--no-commit-id', '--name-only', '-r', '$refnum'
-# git pull  // if error, rebase and do a rebuild
 
-@blueprint.route('/update')
+
+#TODO: Implement proper update which doesn't rebuild everything
+@blueprint.route('/notify')
 def notify():
     # Verify that it's github or localhost
 
     # Return forbidden if not verified
 
     # Shell out to git
+    id = 'c15acbcafcd9947ca21d5204fed8ab36bd2ed9cc'
+    dir = 'content'
+
+    with Popen(['git', 'pull'], cwd=dir, stdout=PIPE) as proc:
+        print("::", proc.communicate()[0])
+
+    with Popen(['git', 'diff-tree', '--no-commit-id', '--name-only', '-r', id], cwd=dir, stdout=PIPE) as proc:
+        files = proc.communicate()[0].split()
+        [reader.build(f, print("Updating: ", files)
+        for file in files
+        reader.build()
+
 
     # Return 204 if successful
     return '', 204
+
+
+@blueprint.route('update/<item>')
+def update():
+
 
 
 @blueprint.route('/rebuild')
