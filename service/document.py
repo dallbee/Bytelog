@@ -1,4 +1,4 @@
-"""import os
+import os
 import re
 
 import dateutil.parser
@@ -8,9 +8,20 @@ from datetime import datetime
 from flask.ext.misaka import markdown
 from titlecase import titlecase
 from urllib.parse import quote_plus
+from glob2 import glob
+
+"""
+reader api:
+metadata: { title*, date, keywords, description, template, path, prev, next }   (*required)
+build(source, target) -> (document, metadata) parses a given item
+
+documents api:
+update(path)   creates, updates, or deletes document(s) at path appropriately
+remove(path)   deletes document(s) at path
+"""
 
 
-class Reader():
+class Documents():
 
     meta = {}
     source = ''
@@ -32,11 +43,11 @@ class Reader():
 
             metadata[result.group(1).lower()] = result.group(2)
 
-        metadata = self._normalize_metadata(metadata, filename)
+        metadata = self._normal_metadata(metadata, filename)
         document = ''.join(lines[key:])
         return (metadata, document)
 
-    def _normalize_metadata(self, metadata, file):
+    def _normal_metadata(self, metadata, file):
 
         def check(key):
             return key in metadata and metadata[key]
@@ -47,6 +58,7 @@ class Reader():
         def raise_exp():
             raise KeyError
 
+        # TODO: Update metadata to reflect new items
         try:
             normalize('title', titlecase, raise_exp)
             normalize('date', dateutil.parser.parse, raise_exp)
@@ -66,42 +78,44 @@ class Reader():
             {content}{{% endblock %}}
             ''').format(content=html, template=metadata['template'])
 
-    def build(self, root, file):
-        if file.startswith('.') or not file.endswith('.md'):
-            return False
+    def _build(self, root, file):
+        # TODO: Allow other file types
+        if not file.endswith('.md'):
+            raise ValueError
 
         try:
             with open(os.path.join(root, file)) as text:
                 meta, content = self._parse_metadata(text.readlines(), file)
         except OSError:
-            return False
+            raise ValueError
 
         if not meta or (meta['date'] - datetime.now()).days >= 0:
-            return False
+            raise ValueError
 
         # TODO: Pass config[markdown] to the markdown parser
         html = self._embed_templating(markdown(content), meta)
         name = os.path.splitext(meta['slug'])[0] + '.jinja'
+        return (meta, html)
 
-        with open(os.path.join(self.target, name), 'w') as text:
-            text.write(html)
+    def _normal_glob(self, path):
+        path += '**' if path.endswith('/') else '*/**'
+        return glob(path)
 
-        self.meta[name] = meta
-        return True
+    def update(self, path):
+        self.remove(path)
+        source_path = os.path.join(self.source, path)
 
-    def build_all(self):
-        for root, dirs, files in os.walk(self.source):
-            for file in files:
-                self.build(root, file)
+        for item in self._normal_glob(source_path):
+            try:
+                meta, html = self._build(*os.path.split(item))
+                print(meta['title'])
+            except ValueError:
+                pass
 
-    def update(self, paths):
-        for path in paths:
-            self.build(*os.path.splitext(path))
+    def remove(self, path):
+        target_path = os.path.join(self.target, path)
 
-    def clean(self):
-        for name in os.listdir(self.target):
-            if not name.startswith("."):
-                os.remove(os.path.join(self.target, name))
+        for item in self._normal_glob(target_path):
+            os.remove(item)
 
         self.content = {}
-"""
