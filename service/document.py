@@ -105,6 +105,7 @@ class Documents():
         self.remove(path)
         source_path = os.path.join(self.source, path)
 
+        # TODO: Utilize metadata and html
         for item in self._normal_glob(source_path):
             try:
                 meta, html = self._build(*os.path.split(item))
