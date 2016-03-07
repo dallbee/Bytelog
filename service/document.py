@@ -1,5 +1,6 @@
 import os
 import re
+import hashlib
 
 import dateutil.parser
 import textwrap
@@ -9,6 +10,7 @@ from flask.ext.misaka import markdown
 from titlecase import titlecase
 from urllib.parse import quote_plus
 from glob2 import glob
+from logging import info, warning, error
 
 """
 reader api:
@@ -30,46 +32,43 @@ class Documents():
     def __init__(self, source, target):
         self.source = source
         self.target = target
-        os.makedirs(self.target, exist_ok=True)
 
-    def _parse_metadata(self, lines, filename):
-        metadata = {}
+    def _parse_metadata(self, lines):
+        meta = {}
 
         for key, line in enumerate(lines):
             result = re.match('^(\w*)[ \t]*:[ \t]*(.*)?[ \t]*$', line)
 
-            if result is None:
+            if not result:
                 break
 
-            metadata[result.group(1).lower()] = result.group(2)
+            meta[result.group(1).lower()] = result.group(2)
 
-        metadata = self._normal_metadata(metadata, filename)
-        document = ''.join(lines[key:])
-        return (metadata, document)
+        return (self._normal_metadata(meta), ''.join(lines[key:]))
 
-    def _normal_metadata(self, metadata, file):
+    def _normal_metadata(self, meta):
 
         def check(key):
-            return key in metadata and metadata[key]
+            return key in meta and meta[key]
 
-        def normalize(key, action, fallback):
-            metadata[key] = action(metadata[key]) if check(key) else fallback()
+        def clean(key, action, default):
+            meta[key] = action(meta[key]) if check(key) else default()
 
         def raise_exp():
             raise KeyError
 
-        # TODO: Update metadata to reflect new items
         try:
-            normalize('title', titlecase, raise_exp)
-            normalize('date', dateutil.parser.parse, raise_exp)
-            normalize('category', lambda x: x, lambda: '')
-            normalize('keywords', lambda x: x.lower().split(), lambda: [])
-            normalize('template', lambda x: x, lambda: 'default')
-            normalize('slug', quote_plus, lambda: os.path.splitext(file)[0])
-        except(KeyError, ValueError, OverflowError):
+            clean('title', titlecase, raise_exp)
+            clean('date', dateutil.parser.parse, raise_exp)
+            clean('keywords', lambda x: x.lower().split(), lambda: [])
+            clean('template', lambda x: x, lambda: 'default')
+            clean('prev', quote_plus, lambda: None)
+            clean('next', quote_plus, lambda: None)
+        except(KeyError, ValueError, OverflowError) as e:
+            warning("Unable to parse metadata: {}".format(e))
             return {}
 
-        return metadata
+        return meta
 
     def _embed_templating(self, html, metadata):
         return textwrap.dedent('''\
@@ -84,39 +83,66 @@ class Documents():
             raise ValueError
 
         try:
-            with open(os.path.join(root, file)) as text:
-                meta, content = self._parse_metadata(text.readlines(), file)
-        except OSError:
+            with open(os.path.join(root, file)) as f:
+                meta, content = self._parse_metadata(f.readlines())
+        except OSError as e:
+            error(e)
             raise ValueError
 
-        if not meta or (meta['date'] - datetime.now()).days >= 0:
+        if not meta:
+            raise ValueError
+
+        if (meta['date'] - datetime.now()).days >= 0:
+            info("Skipping {} until {}".format(file, meta['date']))
             raise ValueError
 
         # TODO: Pass config[markdown] to the markdown parser
-        html = self._embed_templating(markdown(content), meta)
-        name = os.path.splitext(meta['slug'])[0] + '.jinja'
-        return (meta, html)
+        return (meta, self._embed_templating(markdown(content), meta))
 
     def _normal_glob(self, path):
-        path += '**' if path.endswith('/') else '*/**'
+        path += '*/**' if os.path.isdir(path) else '**'
         return glob(path)
 
-    def update(self, path):
+    # TODO: Remove content/ prefix from names
+    def update(self, path=''):
         self.remove(path)
         source_path = os.path.join(self.source, path)
 
-        # TODO: Utilize metadata and html
-        for item in self._normal_glob(source_path):
+        for file in self._normal_glob(source_path):
+            print(file)
             try:
-                meta, html = self._build(*os.path.split(item))
-                print(meta['title'])
+                meta, html = self._build(*os.path.split(file))
             except ValueError:
-                pass
+                continue
 
-    def remove(self, path):
+            target_path = os.path.join(self.target, os.path.splitext(file)[0])
+            os.makedirs(os.path.split(target_path)[0], exist_ok=True)
+
+            try:
+                print(target_path)
+                with open(target_path + '.jinja', 'w') as f:
+                    f.write(html)
+                    self.meta[file] = meta
+                    info("Written {} to cache".format(target_path))
+            except OSError:
+                error(e)
+
+    def remove(self, path=''):
         target_path = os.path.join(self.target, path)
+        glob_paths = self._normal_glob(target_path)
 
-        for item in self._normal_glob(target_path):
-            os.remove(item)
+        for item in glob_paths:
+            if os.path.isfile(item):
+                try: 
+                    os.remove(item)
+                except OSError as e:
+                    error(e)
 
-        self.content = {}
+        for item in glob_paths:
+            if os.path.isdir(item):
+                try:
+                    os.rmdir(item)
+                except OSError as e:
+                    error(e)
+
+        self.meta = {}
