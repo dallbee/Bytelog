@@ -1,16 +1,18 @@
+import hashlib
 import os
 import re
-import hashlib
 
 import dateutil.parser
 import textwrap
 
 from datetime import datetime
 from flask.ext.misaka import markdown
+from glob2 import glob
+from logging import error
+from logging import info
+from logging import warning
 from titlecase import titlecase
 from urllib.parse import quote_plus
-from glob2 import glob
-from logging import info, warning, error
 
 """
 reader api:
@@ -59,6 +61,7 @@ class Documents():
 
         try:
             clean('title', titlecase, raise_exp)
+            clean('author', titlecase, lambda: None)
             clean('date', dateutil.parser.parse, raise_exp)
             clean('keywords', lambda x: x.lower().split(), lambda: [])
             clean('template', lambda x: x, lambda: 'default')
@@ -124,7 +127,7 @@ class Documents():
                     f.write(html)
                     self.meta[file] = meta
                     info("Written {} to cache".format(target_path))
-            except OSError:
+            except OSError as e:
                 error(e)
 
     def remove(self, path=''):
@@ -133,7 +136,7 @@ class Documents():
 
         for item in glob_paths:
             if os.path.isfile(item):
-                try: 
+                try:
                     os.remove(item)
                 except OSError as e:
                     error(e)
